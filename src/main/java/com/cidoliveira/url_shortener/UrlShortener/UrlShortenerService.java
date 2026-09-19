@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class UrlShortenerService {
 
     private final UrlShortenerRepository urlShortenerRepository;
+    private final UrlShortenerMapper urlShortenerMapper;
 
     public String randomString() {
         RandomStringGenerator generator = new RandomStringGenerator.Builder()
@@ -18,16 +19,14 @@ public class UrlShortenerService {
         return generator.generate(4);
     }
 
-    public String putLink(String initialUrl) {
-        String randomUrlKey = randomString();
+    public UrlShortenerDTO putLink(UrlShortenerDTO dto) {
+        UrlShortenerModel model = urlShortenerMapper.toModel(dto);
 
-        UrlShortenerModel model = new UrlShortenerModel();
-        model.setReceivedUrl(initialUrl);
-        model.setShortenedUrl(randomUrlKey);
+        model.setShortenedUrl(randomString());
 
-        urlShortenerRepository.save(model);
+        UrlShortenerModel savedModel = urlShortenerRepository.save(model);
 
-        return randomUrlKey;
+        return urlShortenerMapper.toDTO(savedModel);
     }
 
     public String retrieveLink(String urlKey) {

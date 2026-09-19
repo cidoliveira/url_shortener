@@ -27,11 +27,11 @@ public class UrlShortenerController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> postUrl(@RequestBody String url) {
+    public ResponseEntity<UrlShortenerDTO> postUrl(@RequestBody UrlShortenerDTO dto) {
 
-        String shortKey = urlShortenerService.putLink(url);
+        UrlShortenerDTO createdUrl = urlShortenerService.putLink(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Your short link is: http://localhost:8080/urlshortener/" + shortKey);
+                .body(createdUrl);
     }
 }
