@@ -1,11 +1,13 @@
 package UrlShortner;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/urlshortner")
 public class UrlShortnerController {
@@ -24,14 +26,12 @@ public class UrlShortnerController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PostMapping("/post/{url}")
-    public ResponseEntity<?> postUrl(@PathVariable String url){
-        if (urlShortnerService.retrieveLink(url) == null) {
-            urlShortnerService.putLink(url);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Your short link is: https://localhost:8080/" + urlShortnerService.retrieveKey(url));
-        }
+    @PostMapping("/post")
+    public ResponseEntity<?> postUrl(@RequestBody String url) {
+
+        String shortKey = urlShortnerService.putLink(url);
+
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Your short link is: https://localhost:8080/" + urlShortnerService.retrieveKey(url));
+                .body("Your short link is: http://localhost:8080/urlshortner/" + shortKey);
     }
 }

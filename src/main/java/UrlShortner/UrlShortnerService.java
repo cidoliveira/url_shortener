@@ -1,49 +1,38 @@
 package UrlShortner;
 
-import org.apache.commons.text.RandomStringGenerator;import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
-@NoArgsConstructor
 @AllArgsConstructor
 @Service
 public class UrlShortnerService {
-    private UrlShortnerRepository urlShortnerRepository;
-    private Map<String, String> keyValueUrlHashmap;
-    private Map<String, String> valueKeyUrlHashmap;
+
+    private final UrlShortnerRepository urlShortnerRepository;
 
     public String randomString() {
         RandomStringGenerator generator = new RandomStringGenerator.Builder()
-                .withinRange('a', 'z').get();
-        return generator.generate(10);
+                .withinRange('a', 'z')
+                .get();
+
+        return generator.generate(4);
     }
 
-    public void putLink(String initialUrl) {
-        while(true) {
-            String randomUrlKey = randomString();
-            if (!(keyValueUrlHashmap.containsKey(randomUrlKey))){
-                keyValueUrlHashmap.put(initialUrl, randomUrlKey);
-                valueKeyUrlHashmap.put(randomUrlKey, initialUrl);
-                break;
-            }
-        }
+    public String putLink(String initialUrl) {
+        String randomUrlKey = randomString();
+
+        UrlShortnerModel model = new UrlShortnerModel();
+        model.setReceivedUrl(initialUrl);
+        model.setShortnedUrl(randomUrlKey);
+
+        urlShortnerRepository.save(model);
+
+        return randomUrlKey;
     }
 
     public String retrieveLink(String urlKey) {
-        if (keyValueUrlHashmap.containsKey(urlKey)) {
-            return keyValueUrlHashmap.get(urlKey);
-        }
-        return null;
+        return urlShortnerRepository.findByShortnedUrl(urlKey)
+                .map(UrlShortnerModel::getReceivedUrl)
+                .orElse(null);
     }
-
-    public String retrieveKey(String urlValue) {
-        if (keyValueUrlHashmap.containsValue(urlValue)) {
-            return valueKeyUrlHashmap.get(urlValue);
-        }
-        return null;
-    }
-
-
 }
