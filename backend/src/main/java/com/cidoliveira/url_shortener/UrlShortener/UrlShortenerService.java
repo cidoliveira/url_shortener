@@ -20,8 +20,16 @@ public class UrlShortenerService {
     }
 
     public UrlShortenerDTO putLink(UrlShortenerDTO dto) {
+
         UrlShortenerModel model = urlShortenerMapper.toModel(dto);
 
+        String url = model.getReceivedUrl();
+
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "https://" + url;
+        }
+
+        model.setReceivedUrl(url);
         model.setShortenedUrl(randomString());
 
         UrlShortenerModel savedModel = urlShortenerRepository.save(model);
