@@ -1,14 +1,15 @@
-<div class="flex flex-col items-center justify-center content-center min-h-screen">
-<h1>Url Shortener</h1>
+<div class="flex flex-col items-center justify-center content-center min-h-screen gap-10">
+<h1 class="text-2xl font-bold font-mono">Url Shortener</h1>
 
-  <div>
+  <div class="flex gap-10">
 <input
-  type="text"
+  class="border-2 p-2 rounded-sm"
+  type="text" required
   [(ngModel)]="url"
   placeholder="https://example.com"
 >
 
-<button (click)="shortenUrl()">
+<button class="border-2 p-2 px-10"  (click)="shortenUrl()">
   Shorten Url
 </button>
   </div>
