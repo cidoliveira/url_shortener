@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cidoliveira</groupId>
-    <artifactId>url_shortner</artifactId>
+    <artifactId>url_shortener</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>url_shortner</name>
-    <description>url_shortner</description>
+    <name>url_shortener</name>
+    <description>url_shortener</description>
     <url/>
     <licenses>
         <license/>
@@ -57,6 +57,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>annotationProcessor</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

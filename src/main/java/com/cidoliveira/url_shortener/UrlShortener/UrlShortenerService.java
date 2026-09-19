@@ -1,4 +1,4 @@
-package UrlShortner;
+package com.cidoliveira.url_shortener.UrlShortener;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.text.RandomStringGenerator;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class UrlShortnerService {
+public class UrlShortenerService {
 
-    private final UrlShortnerRepository urlShortnerRepository;
+    private final UrlShortenerRepository urlShortenerRepository;
 
     public String randomString() {
         RandomStringGenerator generator = new RandomStringGenerator.Builder()
@@ -21,18 +21,18 @@ public class UrlShortnerService {
     public String putLink(String initialUrl) {
         String randomUrlKey = randomString();
 
-        UrlShortnerModel model = new UrlShortnerModel();
+        UrlShortenerModel model = new UrlShortenerModel();
         model.setReceivedUrl(initialUrl);
-        model.setShortnedUrl(randomUrlKey);
+        model.setShortenedUrl(randomUrlKey);
 
-        urlShortnerRepository.save(model);
+        urlShortenerRepository.save(model);
 
         return randomUrlKey;
     }
 
     public String retrieveLink(String urlKey) {
-        return urlShortnerRepository.findByShortnedUrl(urlKey)
-                .map(UrlShortnerModel::getReceivedUrl)
+        return urlShortenerRepository.findByShortenedUrl(urlKey)
+                .map(UrlShortenerModel::getReceivedUrl)
                 .orElse(null);
     }
 }

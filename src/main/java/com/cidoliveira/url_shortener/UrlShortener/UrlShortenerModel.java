@@ -1,4 +1,4 @@
-package UrlShortner;
+package com.cidoliveira.url_shortener.UrlShortener;
 
 
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_links")
-public class UrlShortnerModel {
+public class UrlShortenerModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class UrlShortnerModel {
     @Column
     private String receivedUrl;
 
-    @Column(unique = true)
-    private String shortnedUrl;
+    @Column(name = "shortned_url", unique = true)
+    private String shortenedUrl;
 
 }

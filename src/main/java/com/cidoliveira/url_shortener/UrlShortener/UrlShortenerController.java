@@ -1,4 +1,4 @@
-package UrlShortner;
+package com.cidoliveira.url_shortener.UrlShortener;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,13 +9,13 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/urlshortner")
-public class UrlShortnerController {
-    private UrlShortnerService urlShortnerService;
+@RequestMapping("/urlshortener")
+public class UrlShortenerController {
+    private final UrlShortenerService urlShortenerService;
 
     @GetMapping("/{url}")
     public ResponseEntity<?> accessUrl(@PathVariable String url){
-        String foundUrl = urlShortnerService.retrieveLink(url);
+        String foundUrl = urlShortenerService.retrieveLink(url);
 
         if (foundUrl != null) {
         return ResponseEntity.status(HttpStatus.FOUND)
@@ -29,9 +29,9 @@ public class UrlShortnerController {
     @PostMapping("/post")
     public ResponseEntity<?> postUrl(@RequestBody String url) {
 
-        String shortKey = urlShortnerService.putLink(url);
+        String shortKey = urlShortenerService.putLink(url);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Your short link is: http://localhost:8080/urlshortner/" + shortKey);
+                .body("Your short link is: http://localhost:8080/urlshortener/" + shortKey);
     }
 }

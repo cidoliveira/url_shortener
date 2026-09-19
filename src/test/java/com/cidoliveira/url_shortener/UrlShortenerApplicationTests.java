@@ -1,10 +1,10 @@
-package com.cidoliveira.url_shortner;
+package com.cidoliveira.url_shortener;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UrlShortnerApplicationTests {
+class UrlShortenerApplicationTests {
 
     @Test
     void contextLoads() {
